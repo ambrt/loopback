@@ -402,7 +402,7 @@ module.exports = function(User) {
       '?uid=' +
       options.user.id +
       '&redirect=' +
-      options.redirect;
+      encodeURIComponent(options.redirect);
 
     // Email model
     var Email = options.mailer || this.constructor.email || registry.getModelByType(loopback.Email);
@@ -703,7 +703,7 @@ module.exports = function(User) {
         if (!ctx.res) {
           return next(new Error('The transport does not support HTTP redirects.'));
         }
-        ctx.res.location(ctx.args.redirect);
+        ctx.res.location(decodeURIComponent(ctx.args.redirect));
         ctx.res.status(302);
       }
       next();
